@@ -1,4 +1,5 @@
 from State import GameState
+from State import Move
 import pygame as pg
 
 
@@ -32,6 +33,8 @@ def draw(board):
 
 
 def main():
+    click2 = []
+    evn=()
     screen.fill(pg.Color("white"))
     curent=GameState()
     loadimg()
@@ -40,6 +43,17 @@ def main():
         for e in pg.event.get():
             if e.type== pg.QUIT:
                 running=False
+            elif e.type==pg.MOUSEBUTTONDOWN:
+                loc=pg.mouse.get_pos()
+                col=loc[0]//field_sz
+                lin=loc[1]//field_sz
+                evn=(lin, col)
+                click2.append(evn)
+            if len(click2)==2:
+                move=Move(click2[0], click2[1],curent.board)
+                curent.makeMove(move)
+                evn=()
+                click2=[]
         draw(curent.board)
         pg.display.flip()
 
