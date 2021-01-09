@@ -37,8 +37,10 @@ def main():
     evn=()
     screen.fill(pg.Color("white"))
     curent=GameState()
+    validMov=curent.getValidMov()
     loadimg()
     running=True
+    flag=False #este folosit pentru a actualiza sau nu lista de mutari
     while running:
         for e in pg.event.get():
             if e.type== pg.QUIT:
@@ -51,9 +53,17 @@ def main():
                 click2.append(evn)
             if len(click2)==2:
                 move=Move(click2[0], click2[1],curent.board)
-                curent.makeMove(move)
+                if move in validMov:
+                    #print(move)
+                    #print(validMov)
+                    curent.makeMove(move)
+                    flag=True
                 evn=()
                 click2=[]
+        if flag:
+            #print("hei")
+            validMov=curent.getValidMov()
+            flag=False
         draw(curent.board)
         pg.display.flip()
 
