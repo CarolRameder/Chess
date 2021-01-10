@@ -1,4 +1,3 @@
-#print("hei")
 class GameState():
     def __init__(self):
         self.board = [
@@ -63,12 +62,12 @@ class GameState():
                 if 0<=cri<= 7 and 0<=crj<= 7:
                     # empty
                     if self.board[cri][crj][0]=='-':
-                        print(i,j,cri,crj)
+                        #print(i,j,cri,crj)
                         moves.append(Move((i, j), (cri, crj), self.board))
 
                     #oponent
                     elif self.board[cri][crj][0]==opon:
-                        print(i,j,cri, crj)
+                        #print(i,j,cri, crj)
                         moves.append(Move((i, j), (cri, crj), self.board))
                         break
                     #piesa mea
@@ -78,10 +77,28 @@ class GameState():
                     break
 
     def getKingMov(self, i, j, moves):
-        pass
+        dir = ((1, 1), (1, -1), (1, 0), (0, -1), (0, 1), (-1, -1), (-1, 1), (-1, 0))
+        if self.whiteToMove:
+            opon = 'b'
+        else:
+            opon = 'w'
+        for d in dir:
+            cri = i + d[0]
+            crj = j + d[1]
+            if 0 <= cri <= 7 and 0 <= crj <= 7:
+                # empty
+                if self.board[cri][crj][0] == '-':
+                    # print(i, j, cri, crj)
+                    moves.append(Move((i, j), (cri, crj), self.board))
+
+                # oponent
+                elif self.board[cri][crj][0] == opon:
+                    # print(i, j, cri, crj)
+                    moves.append(Move((i, j), (cri, crj), self.board))
 
     def getQueenMov(self, i, j, moves):
-        pass
+        self.getRookMov(i, j, moves)
+        self.getBishopMov(i, j, moves)
 
     def getPawnMov(self, i, j, moves):
         #white pawn
@@ -118,10 +135,54 @@ class GameState():
                     moves.append(Move((i, j), (i+1, j+1), self.board))
 
     def getBishopMov(self, i, j, moves):
-        pass
+        dir = ((-1, 1), (1, -1), (1, 1), (-1, -1))
+        if self.whiteToMove:
+            opon = 'b'
+        else:
+            opon = 'w'
+        print("These are ", i, j)
+        for d in dir:
+            for m in range(1, 8):
+                cri = i + d[0] * m
+                crj = j + d[1] * m
+                # print(cri, crj)
+                if 0 <= cri <= 7 and 0 <= crj <= 7:
+                    # empty
+                    if self.board[cri][crj][0] == '-':
+                        #print(i, j, cri, crj)
+                        moves.append(Move((i, j), (cri, crj), self.board))
+
+                    # oponent
+                    elif self.board[cri][crj][0] == opon:
+                        #print(i, j, cri, crj)
+                        moves.append(Move((i, j), (cri, crj), self.board))
+                        break
+                    # piesa mea
+                    else:
+                        break
+                else:
+                    break
+
 
     def getKnightMov(self, i, j, moves):
-        pass
+        dir = ((2, 1), (2, -1), (1, 2), (1, -2),(-2, 1), (-2, -1), (-1, 2), (-1, -2))
+        if self.whiteToMove:
+            opon = 'b'
+        else:
+            opon = 'w'
+        for d in dir:
+            cri=i+d[0]
+            crj=j+d[1]
+            if 0 <= cri <= 7 and 0 <= crj <= 7:
+                # empty
+                if self.board[cri][crj][0] == '-':
+                    # print(i, j, cri, crj)
+                    moves.append(Move((i, j), (cri, crj), self.board))
+
+                # oponent
+                elif self.board[cri][crj][0] == opon:
+                    # print(i, j, cri, crj)
+                    moves.append(Move((i, j), (cri, crj), self.board))
 
 #start si end sunt 2 vectori cu cate 2 pozitii 0 - l , 1 -  c
 class Move():

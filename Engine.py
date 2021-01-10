@@ -60,6 +60,7 @@ def main():
                     flag=True
                 evn=()
                 click2=[]
+                #ident2 + else: playerClicks=[sqSelected]
         if flag:
             #print("hei")
             validMov=curent.getValidMov()
